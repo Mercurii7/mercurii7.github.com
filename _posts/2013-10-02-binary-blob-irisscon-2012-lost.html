@@ -1,0 +1,14 @@
+---
+layout: post
+title: Binary Blob - IRISSCON 2012 Lost Challenges
+date: '2013-10-02T21:14:00.000+08:00'
+author: KE
+tags:
+- IRISSCON 2012 Lost Challenges
+- WeChall
+modified_time: '2013-10-26T12:14:29.607+08:00'
+blogger_id: tag:blogger.com,1999:blog-2905258938461604888.post-7336295130076801264
+blogger_orig_url: http://kectf.blogspot.com/2013/10/binary-blob-irisscon-2012-lost.html
+---
+
+Binary Blob - Easy - 250<br /><br />I had no idea what a binary blob is, the file name for this challenge was "rawfile", which doesn't tell us anything at all. This is what I got from using the file command on it:<br /><blockquote class="tr_bq"><code>Linux Compressed ROM File System data</code></blockquote>Doing a bit of Googling shows that it could be an img file and it could be mounted. I also found out that 7-zip would be able to extract the contents of the file, so I just went ahead and did that. You could also mount the img file in linux.<br /><br />The extraction gave a bunch of folders with the starting portion of a gif image in each folder along with various data files which seemed random at first glance. All the data files doesn't seem hold anything interesting on their own. Looking at the size of each file, I noticed that every file had the same file size except one file which is the last file if arranged alphanumerically. It was possible that the gif image was split into multiple files.<br /><br />Combining the files can be done using the cat command. Just go into each folder and run:<br /><pre class="prettyprint">cat * &gt;&gt; image.gif</pre>As suspected, we now have a full gif image. Doing that for each of the folder gets us 10 gif images. However the key wasn't obviously seen in any of the images. My first thought was image steganography, but for an 'easy' challenge it shouldn't be that complicated. Then I remembered that gif images can contain more than 1 frame to create animations.<br /><br />Opening each image in GIMP which will show all the frames of each image. And there is the key! Hidden in the 2nd frame of 1 of the images. Besides it being a pain having to manually type the key out, this challenge is basically solved!<br /><br />

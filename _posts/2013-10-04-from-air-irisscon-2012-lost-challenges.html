@@ -1,0 +1,14 @@
+---
+layout: post
+title: From the air - IRISSCON 2012 Lost Challenges
+date: '2013-10-04T21:07:00.003+08:00'
+author: KE
+tags:
+- IRISSCON 2012 Lost Challenges
+- WeChall
+modified_time: '2013-10-26T12:15:03.856+08:00'
+blogger_id: tag:blogger.com,1999:blog-2905258938461604888.post-2415752842903682521
+blogger_orig_url: http://kectf.blogspot.com/2013/10/from-air-irisscon-2012-lost-challenges.html
+---
+
+From the air - Medium - 600<br /><div><br /></div><div>We are faced with a cap file, which is a file containing the packets captured from a network, a wireless network for this specific file. Once again, this is my first time facing a wireless network packet capture file. I've only played with wired network pcap files before.&nbsp;</div><div><br /></div><div>I suspected that WEP is involved and tried the various cracking methods found online. Loading the cap file into aircrack told me that it is WPA (1 handshake) instead. Cracking the key for WPA requires a dictionary file(Password List) which I didn't have but could be easily found. On we go to try and crack the key with:<br /><pre class="prettyprint">aircrack-ng data-01.cap -w password -b 02:1a:11:f9:e2:05</pre>I expected that the cracking process would require more than a few minutes but aircrack just spat out the key instantly. Now I've tried to use wireshark to decrypt the traffic but it didn't work for me. If you would like to try it for yourself, you can find the link below. So I used airdecap-ng instead:<br /><pre class="prettyprint">airdecap-ng -p internet -e iriss_wifi data-01.cap&nbsp;</pre>&nbsp;Let's go back to wireshark with the output file. There is a lot of traffic in here, like a lot. Going into the TCP Conversations (Statistics-&gt;Conversations-&gt;TCP) we can find some HTTP traffic here. A conversation that stands out is the one using IRC.<br /><br />Clicking on it and following the stream shows us an actual conversation in an IRC channel. Look at what we have here, they are discussing about a challenge!<br /><br /><br /><b>Links and Stuff</b><br /><a href="http://download.openwall.net/pub/wordlists/passwords/">Password List</a><br /><a href="http://wiki.wireshark.org/HowToDecrypt802.11">How To Decrypt 802.11 - Wireshark</a></div>

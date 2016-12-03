@@ -1,0 +1,14 @@
+---
+layout: post
+title: Crack the Code - IRISSCON 2012 Lost Challenges
+date: '2013-10-02T18:24:00.000+08:00'
+author: KE
+tags:
+- IRISSCON 2012 Lost Challenges
+- WeChall
+modified_time: '2013-10-26T12:17:31.113+08:00'
+blogger_id: tag:blogger.com,1999:blog-2905258938461604888.post-3932476210328549449
+blogger_orig_url: http://kectf.blogspot.com/2013/10/crack-code-irisscon-2012-lost-challenges.html
+---
+
+Crack the Code - Easy - 200<br /><br />This challenge gives us a python script. Going through the script, it checks a code we provide in an argument when executing the script. The code must be integers only and 7 characters long. The code is hashed using sha1, sha224, sha256 as well as sha384. The first 2 characters of the result of each hash is compared individually.<br /><pre class="prettyprint">sha1.hexdigest()[0:2] == 'a6' and<br />sha224.hexdigest()[0:2] == '7b' and<br />sha256.hexdigest()[0:2] == '57' and<br />sha384.hexdigest()[0:2] == 'db'</pre>So the goal here is to provide a 7 digit long number where the result of each hash matches what is needed in the script. This challenge can be easily completed using a brute force script to find the correct number. Of course I'm not sure if it's the right way, but it's the easiest way for me (still learning!).<br /><br />I'll just copy the validatecode function provided into my own script and use a for loop to go through the numbers from 0000000 to 9999999<br /><pre class="prettyprint">for x in range (0, 9999999):<br />    if validatecode("{0:07d}".format(x)):<br />        print x<br />        break</pre>The format function is just to pad the number with 0s so that the number is 7 digits long when being hashed. <br />It didn't take long for the script to get a number that matches the requirements. After getting the number, it is as simple as executing the python script and providing the number and the key is given!<br /><br />The decryptMessage part of the python script uses the code we provide to decrypt a message into the key. This forces us to go through the code validation part to get the key. 
