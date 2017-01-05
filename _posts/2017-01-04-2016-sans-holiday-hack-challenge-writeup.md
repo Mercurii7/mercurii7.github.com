@@ -437,6 +437,7 @@ But first you would have to enable *debug* mode, here's the [hint](https://pen-t
 Here's where you can find the string to change to enable debug mode:
 
 `SantaGram_4.2\res\values\strings.xml`
+
 ```
     <string name="debug_data_enabled">true</string>
 ```
