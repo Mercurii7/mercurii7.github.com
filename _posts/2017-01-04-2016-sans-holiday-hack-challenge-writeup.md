@@ -244,7 +244,7 @@ Press Enter To Continue
 
 Key: LOOK AT THE PRETTY LIGHTS
 
-#### Deep File
+#### Deep Directories
 
 {% include image name="deep-file.png" caption="Deep File Terminal" %}
 
