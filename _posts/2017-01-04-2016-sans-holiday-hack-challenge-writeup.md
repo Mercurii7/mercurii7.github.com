@@ -430,7 +430,18 @@ The elf says - you have conquered this challenge - the game will now end.
 
 #### 3. [X] - The Debug Server
 
-To get the POST request body for this challenge, I installed and played with the *SantaGram* APK we obtained in the previous parts. Take note of traffic going to dev.northpolewonderland.com.
+To get the POST request body for this challenge, I installed and played with the *SantaGram* APK we obtained in the previous parts. 
+
+But first you would have to enable *debug* mode, here's the [hint](https://pen-testing.sans.org/blog/2015/07/07/modifying-android-apps-a-sec575-hands-on-exercise-part-2) given by 1 of the elves!
+
+Here's where you can find the string to change to enable debug mode:
+
+`SantaGram_4.2\res\values\strings.xml`
+```
+    <string name="debug_data_enabled">true</string>
+```
+
+Take note of traffic going to dev.northpolewonderland.com.
 
 The request should look something like :
 
