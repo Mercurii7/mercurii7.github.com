@@ -7,7 +7,7 @@
 
 # Site settings
 title: Mercurial Security
-email: ke[alias]mercurialsecurity[dot]com
+email: ke[@]mercurialsecurity[dot]com
 description: > # this means to ignore newlines until "baseurl:"
   InfoSec, CTFs, Bug Bounties
 baseurl: "" # the subpath of your site, e.g. /blog
