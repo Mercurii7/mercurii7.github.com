@@ -273,13 +273,13 @@ Key: open_sesame
 
 **Cheat:**
 
-1. Hex dump wumpus to extract binary to my own machine
+Hex dump wumpus to extract binary to my own machine
 
 ``` bash
 $ od -A x -t x1 -v wumpus
 ```
 
-2. Patch the 'shoot' function: `jne to je`  
+Patch the 'shoot' function: `jne to je`  
 Modified assembly instructions:
 
 ```
@@ -287,7 +287,7 @@ Modified assembly instructions:
 0x00401a0a      740f           je 0x401a1b
 ```
 
-3. Run the modified binary
+Run the modified binary
 
 Key: WUMPUS IS MISUNDERSTOOD
 
