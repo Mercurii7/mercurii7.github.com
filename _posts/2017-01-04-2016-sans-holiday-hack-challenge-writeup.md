@@ -676,7 +676,7 @@ This will let us perform a 'sql injection' attack by querying any data we want b
 
 Here's how I solved this challenge:
 
-Edit the a report's query to view the rows in the *audio* table
+Edit a report's query to view the rows in the *audio* table
 
 ```
 https://analytics.northpolewonderland.com/edit.php?id=cca9e991-b986-4cb0-9df8-498fbe0e3029&name=&description=&query=SELECT%20*%20FROM%20`audio`
