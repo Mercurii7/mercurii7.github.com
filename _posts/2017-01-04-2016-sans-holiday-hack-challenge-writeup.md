@@ -3,7 +3,7 @@ layout: post
 author: Mercurii
 title: 2016 SANS Holiday Hack Challenge Writeup
 tags:
-- #sansholidayhack
+- sansholidayhack
 ---
 
 This will be my writeup for the 2016 SANS Holiday Hack Challenge. It is still very much in my raw notes format. Hopefully I'll take the time to clean it up and make it more readable ;)
