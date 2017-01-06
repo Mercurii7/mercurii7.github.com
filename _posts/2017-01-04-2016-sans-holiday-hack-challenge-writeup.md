@@ -1,6 +1,6 @@
 ---
 layout: post
-author: KE
+author: Mercurii
 title: 2016 SANS Holiday Hack Challenge Writeup
 tags:
 - #sansholidayhack
