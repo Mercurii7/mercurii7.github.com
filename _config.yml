@@ -15,7 +15,7 @@ title-img: "/assets/mercurialsecurity-black.png"
 # Of course don't forget to change the username and projectname to YOUR username and project
 
 # Name of website
-title: Mercurial Security
+#title: Mercurial Security
 
 # Short description of your site
 description: InfoSec, CTFs, Bug Bounties
