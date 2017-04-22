@@ -6,7 +6,7 @@
 # If you are building a simple GitHub user page (http://username.github.io) then use these settings:
 url: "https://blog.mercurialsecurity.com"
 baseurl: ""
-title-img: "/assets/mercurialsecurity-black.png"
+#title-img: "/assets/mercurialsecurity-black.png"
 
 # If you are building a GitHub project page then use these settings:
 #url: "http://username.github.io/projectname"
@@ -15,7 +15,7 @@ title-img: "/assets/mercurialsecurity-black.png"
 # Of course don't forget to change the username and projectname to YOUR username and project
 
 # Name of website
-#title: Mercurial Security
+title: Mercurial Security
 
 # Short description of your site
 description: InfoSec, CTFs, Bug Bounties
